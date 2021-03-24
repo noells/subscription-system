@@ -1,6 +1,9 @@
 /node_modules
+/**/node_modules
 /**/.#*
 /*~
 /*.swp
 /lib
+/**/lib
 /.test_dir
+/**/.test_dir
