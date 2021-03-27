@@ -1,0 +1,192 @@
+openapi: "3.0.0"
+servers:
+  - url: https://public-service
+info:
+  description: The REST API for the public-service
+  title: REST API
+  version: "1.0.0"
+paths:
+  /subscriptions:
+    get:
+      operationId: getSubscriptions
+      summary: Get all subscriptions
+      description: Get all subscriptions
+      tags:
+        - subscriptions
+      responses:
+        "200":
+          description: An object that contains all subscriptions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscriptions"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      operationId: createSubscription
+      summary: Create subscription
+      description: Create a subscription with the given data
+      tags:
+        - subscriptions
+      requestBody:
+        description: The data used to create the subscription 
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateSubscriptionData" 
+      responses:
+        "201":
+          description: Created 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessfulSubscriptionOperation"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /subscriptions/{id}:
+    get:
+      operationId: getSubscription
+      summary: Get subscription
+      description: Get a subscription by ID
+      tags:
+        - subscriptions
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The ID of the subscription 
+      responses:
+        "200":
+          description: The subscription identified by the provided ID 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "404":
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      operationId: cancelSubscription
+      summary: Delete subscription
+      description: Delete a subscription by the provided ID
+      tags:
+        - subscriptions
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: The ID of the subscription 
+      responses:
+        "200":
+          description: Deleted 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessfulSubscriptionOperation"
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Subscriptions:
+      type: object
+      properties:
+        subscriptions:
+          type: array
+          items:
+            $ref: "#/components/schemas/Subscription"
+    Subscription:
+      type: object
+      required:
+        - subscriptionId
+        - email
+        - birthDate
+        - consent
+        - newsletterId
+      properties:
+        subscriptionId:
+          type: string
+          description: The ID of the subscription
+        email:
+          type: string
+          format: email
+          description: Subscriber's email 
+        dateBirth:
+          type: string
+          description: Subscriber's date of birth 
+        consent:
+          type: boolean
+        newsletterId:
+          type: string
+          description: ID that relates with the newsletter to which is subscribed 
+        firstName:
+          type: string
+          description: Subscriber's first name 
+        gender:
+          type: string
+          description: Subscriber's gender 
+    CreateSubscriptionData:
+      type: object
+      required:
+        - email
+        - birthDate
+        - consent
+        - newsletterId
+      properties:
+        email:
+          type: string
+          format: email
+          description: Subscriber's email 
+        dateBirth:
+          type: string
+          description: Subscriber's date of birth 
+        consent:
+          type: boolean
+        newsletterId:
+          type: string
+          description: ID that relates with the newsletter to which is subscribed 
+        firstName:
+          type: string
+          description: Subscriber's first name 
+        gender:
+          type: string
+          description: Subscriber's gender 
+    SuccessfulSubscriptionOperation:
+      type: object
+      required:
+        - subscriptionId
+      properties:
+        subscriptionId:
+          type: string
+          description: The ID of the subscription
+    Error:
+      type: object
+      properties:
+        error: 
+          description: The error message
+          type: string

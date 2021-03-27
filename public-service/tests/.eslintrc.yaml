@@ -1,0 +1,16 @@
+env:
+    mocha: true
+rules:
+    no-unused-expressions: 0
+    no-console: 0
+    prefer-spread: 0
+
+overrides:
+- files: "*.ts"
+  parser: "@typescript-eslint/parser"
+  plugins:
+    - "@typescript-eslint"
+  parserOptions:
+    project: "./tsconfig.test.json"
+  rules:
+    "@typescript-eslint/explicit-function-return-type": warn
