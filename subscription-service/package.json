@@ -1,0 +1,43 @@
+{
+  "name": "subscription-service",
+  "version": "1.0.0",
+  "description": "Subscription Service",
+  "scripts": {
+    "prepare": "rm -rf lib && tsc -b src/tsconfig-prod.json",
+    "start": "npm run prepare && node lib/index.js",
+    "test-acceptance": "tsc -b tests/acceptance && NODE_ENV=acceptance mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/acceptance/**/*.js'",
+    "test-acceptance-tdd": "NODE_ENV=acceptance tsc-watch -b tests/acceptance --onSuccess \"mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/acceptance/**/*.js'\"",
+    "test-unit": "rm -rf .test_dir && tsc -b tests/unit && NODE_ENV=test mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/unit/**/*.js'",
+    "test-unit-tdd": "rm -rf .test_dir && NODE_ENV=test tsc-watch -b tests/unit --onSuccess \"mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/unit/**/*.js'\""
+  },
+  "author": "noells",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chai": "*",
+    "@types/mocha": "*",
+    "@types/sinon": "^9.0.11",
+    "@typescript-eslint/eslint-plugin": "^2.26.0",
+    "@typescript-eslint/parser": "^2.26.0",
+    "chai": "*",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "mocha": "*",
+    "sinon": "^10.0.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.9.0"
+  },
+  "dependencies": {
+    "@types/amqplib": "^0.5.17",
+    "@types/mongodb": "^3.6.10",
+    "@types/node": "^14.14.37",
+    "@types/uuid": "^8.3.0",
+    "amqplib": "^0.7.1",
+    "fp-ts": "^2.9.5",
+    "io-ts": "^2.2.16",
+    "mongodb": "^3.6.5",
+    "rxjs": "^6.6.6",
+    "uuid": "^8.3.2",
+    "winston": "^3.3.3"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+		"composite": true,
+    "allowJs": true,
+    "outDir": "./lib",
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "lib": [
+      "es2015"
+    ],
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "sourceMap": true,
+    "strict": true,
+    "target": "es2017"
+  }
+}
