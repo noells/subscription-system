@@ -1,11 +1,17 @@
 import amqp, {Channel, Connection, ConsumeMessage, Replies} from 'amqplib';
+import {BadRequest, Conflict, NotFound} from 'http-errors';
+import * as t from 'io-ts';
 import {ReplaySubject} from 'rxjs';
-import {take, filter} from 'rxjs/operators';
+import {filter, take} from 'rxjs/operators';
+import * as uuid from 'uuid';
 import {logger} from '../logger/Logger';
 import {RpcClient, RpcResponse} from './RpcClient';
-import * as uuid from 'uuid';
 
 export interface RpcRequest {}
+
+const ErrorResponse = t.type({
+	error: t.string,
+});
 
 export class SimpleRpcClient implements RpcClient {
 	private static readonly RCP_QUEUE = 'rcp_queue';
@@ -49,8 +55,14 @@ export class SimpleRpcClient implements RpcClient {
 			},
 		);
 		const response = await waitResponse;
+		const parsedResponse = JSON.parse(response.content.toString());
+
+		if (ErrorResponse.is(parsedResponse.payload)) {
+			throw this.handleRpcError(parsedResponse.payload.error);
+		}
+
 		return {
-			...JSON.parse(response.content.toString()),
+			...parsedResponse,
 		};
 	}
 
@@ -60,7 +72,18 @@ export class SimpleRpcClient implements RpcClient {
 		}
 
 		logger.info(`Got: ${msg.content.toString()}`);
-		console.log(`Got: ${msg.content.toString()}`);
 		this.responses.next(msg);
+	}
+
+	private handleRpcError(error: string) {
+		if (error.includes('BadRequest')) {
+			throw new BadRequest();
+		} else if (error.includes('NotFound')) {
+			throw new NotFound();
+		} else if (error.includes('AlreadyExists')) {
+			throw new Conflict();
+		}
+
+		throw Error('Error making the request');
 	}
 }

@@ -54,7 +54,7 @@ export class SubscriptionApp implements RestApp {
 	private async onGetSubscription(req: Request, res: Response): Promise<void> {
 		logger.info('onGetSubscription');
 		const subscription = await this.useCases.getSubscription(req.params.id);
-		res.status(200).json({subscription});
+		res.status(200).json(subscription);
 	}
 
 	private async onCreateSubscriptions(req: Request, res: Response): Promise<void> {
