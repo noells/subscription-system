@@ -23,11 +23,11 @@ export class SubscriptionFacade implements SubscriptionUseCases {
 	}
 
 	public async getSubscriptions(): Promise<SubscriptionDTO[]> {
-		const subscriptions = await this.rpcClient.rpc<SubscriptionDTO[]>({
+		const subscriptions = await this.rpcClient.rpc<{subscriptions: SubscriptionDTO[]}>({
 			method: 'getSubscriptions',
 		});
 
-		return subscriptions.payload;
+		return subscriptions.payload.subscriptions;
 	}
 
 	public async getSubscription(subscriptionId: string): Promise<SubscriptionDTO> {
@@ -46,9 +46,7 @@ export class SubscriptionFacade implements SubscriptionUseCases {
 	): Promise<string> {
 		const createResponse = await this.rpcClient.rpc<{subscriptionId: string}>({
 			method: 'createSubscription',
-			payload: {
-				subscription,
-			},
+			payload: subscription,
 		});
 
 		return createResponse.payload.subscriptionId;
