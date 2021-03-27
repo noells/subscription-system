@@ -3,7 +3,11 @@ import {logger} from './logger/Logger';
 
 const main = async (): Promise<void> => {
 	logger.info('Starting Service...');
-	const service = PublicService.of();
+	const service = PublicService.of({
+		httpAddress: '127.0.0.1',
+		httpPort: 8888,
+		rabbitAddress: 'amqp://rabbitmq',
+	});
 	await service.start();
 
 	const stop = async (): Promise<void> => {

@@ -9,7 +9,8 @@
     "test-acceptance": "tsc -b tests/acceptance && NODE_ENV=acceptance mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/acceptance/**/*.js'",
     "test-acceptance-tdd": "NODE_ENV=acceptance tsc-watch -b tests/acceptance --onSuccess \"mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/acceptance/**/*.js'\"",
     "test-unit": "rm -rf .test_dir && tsc -b tests/unit && NODE_ENV=test mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/unit/**/*.js'",
-    "test-unit-tdd": "rm -rf .test_dir && NODE_ENV=test tsc-watch -b tests/unit --onSuccess \"mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/unit/**/*.js'\""
+    "test-unit-tdd": "rm -rf .test_dir && NODE_ENV=test tsc-watch -b tests/unit --onSuccess \"mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/unit/**/*.js'\"",
+    "test-integration": "rm -rf .test_dir && tsc -b tests/integration && NODE_ENV=test mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/integration/**/*.js'"
   },
   "author": "noells",
   "license": "ISC",
@@ -29,10 +30,13 @@
     "typescript": "^3.9.0"
   },
   "dependencies": {
+    "@types/amqplib": "^0.5.17",
     "@types/body-parser": "^1.19.0",
     "@types/express": "^4.17.11",
     "@types/http-errors": "^1.8.0",
     "@types/node": "^14.14.35",
+    "@types/uuid": "^8.3.0",
+    "amqplib": "^0.7.1",
     "axios": "^0.21.1",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
@@ -40,6 +44,8 @@
     "http-errors": "^1.8.0",
     "io-ts": "^2.2.16",
     "portfinder": "^1.0.28",
+    "rxjs": "^6.6.6",
+    "uuid": "^8.3.2",
     "winston": "^3.3.3"
   }
 }

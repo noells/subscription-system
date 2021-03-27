@@ -3,5 +3,6 @@
   "references": [
     { "path": "./src" },
     { "path": "./tests/unit" },
+    { "path": "./tests/integration" },
   ]
 }
