@@ -1,0 +1,62 @@
+asyncapi: '2.0.0'
+
+info:
+  title: Subscriptions RPC Server
+  description: Subscriptions service RPC server docs. To more information about the payload of each request, see public-service OpenApi docs. 
+  version: '1.0.0'
+
+servers:
+  production:
+    url: rabbitmq.example.org
+    protocol: amqp
+
+channels:
+  '{queue}':
+    parameters:
+      queue:
+        schema:
+          type: string
+    bindings:
+      amqp:
+        is: queue
+        queue:
+          exclusive: true
+    subscribe:
+      operationId: subscriptions
+      bindings:
+        amqp:
+          ack: true
+      message:
+        correlationId:
+          location: $message.header#/correlationId 
+        payload:
+          type: object
+
+  rpc_queue:
+    bindings:
+      amqp:
+        is: queue
+        queue:
+          durable: false
+    publish:
+      operationId: sum
+      message:
+        bindings:
+          amqp:
+            replyTo:
+              type: string
+        correlationId:
+          location: $message.header#/correlationId 
+        payload:
+          type: object
+          properties:
+            method:
+              type: string
+              enum:
+                - getSubscriptions
+                - getSubscription
+                - createSubscription
+                - deleteSubscription
+            payload:
+              type: object
+              description: The parameters required by the operation to perform. See public-service OpenApi docs for more info.
