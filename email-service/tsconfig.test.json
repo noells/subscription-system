@@ -1,0 +1,23 @@
+{
+  "include": [
+    "src/**/*.ts",
+    "tests/**/*.ts",
+  ],
+  "compilerOptions": {
+		"incremental": true,
+    "outDir": "./.test_dir",
+		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "lib": [
+      "es2015"
+    ],
+    "moduleResolution": "node",
+    "module": "CommonJS",
+    "sourceMap": false,
+    "strict": true,
+    "target": "es2017",
+		"resolveJsonModule": true
+  }
+}

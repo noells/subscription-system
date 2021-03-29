@@ -6,10 +6,7 @@
     "prepare": "rm -rf lib && tsc -b src/tsconfig-prod.json",
     "start": "npm run prepare && node lib/index.js",
     "docs": "npx redoc-cli bundle -o docs/api/index.html src/api/openapi.yaml",
-    "test-acceptance": "tsc -b tests/acceptance && NODE_ENV=acceptance mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/acceptance/**/*.js'",
-    "test-acceptance-tdd": "NODE_ENV=acceptance tsc-watch -b tests/acceptance --onSuccess \"mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/acceptance/**/*.js'\"",
     "test-unit": "rm -rf .test_dir && tsc -b tests/unit && NODE_ENV=test mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/unit/**/*.js'",
-    "test-unit-tdd": "rm -rf .test_dir && NODE_ENV=test tsc-watch -b tests/unit --onSuccess \"mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/unit/**/*.js'\"",
     "test-integration": "rm -rf .test_dir && tsc -b tests/integration && NODE_ENV=test mocha --reporter ${MOCHA_REPORTER:-spec} '.test_dir/tests/integration/**/*.js'"
   },
   "author": "noells",
