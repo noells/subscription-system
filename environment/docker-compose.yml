@@ -15,3 +15,21 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+
+  public-service:
+    image: public-service
+    ports:
+      - "8888:8888"
+    depends_on:
+      - rabbitmq
+
+  subscription-service:
+    image: subscription-service
+    depends_on:
+      - rabbitmq
+      - mongodb
+
+  email:
+    image: email-service
+    depends_on:
+      - rabbitmq

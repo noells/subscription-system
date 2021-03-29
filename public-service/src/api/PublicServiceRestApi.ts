@@ -13,18 +13,13 @@ export class PublicServiceRestApi {
 	private app!: Application;
 	private server!: Server;
 
-	private constructor(
-		private readonly address: string,
-		private readonly port: number,
-		private readonly useCases: RestApiUseCases,
-	) {}
+	private constructor(private readonly port: number, private readonly useCases: RestApiUseCases) {}
 
 	public static async start(
-		addres: string,
 		port: number,
 		useCases: RestApiUseCases,
 	): Promise<PublicServiceRestApi> {
-		const api = new PublicServiceRestApi(addres, port, useCases);
+		const api = new PublicServiceRestApi(port, useCases);
 		await api.start();
 
 		return api;
@@ -40,8 +35,8 @@ export class PublicServiceRestApi {
 
 		this.server = http.createServer(this.app);
 
-		logger.info(`Starting HTTP server on ${this.address}:${this.port}`);
-		await new Promise<void>((res) => this.server.listen(this.port, this.address, res));
+		logger.info(`Starting HTTP server on port ${this.port}`);
+		await new Promise<void>((res) => this.server.listen(this.port, res));
 	}
 
 	public async stop(): Promise<void> {
