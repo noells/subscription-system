@@ -10,3 +10,8 @@ services:
     image: mongo:4.4-bionic
     ports:
       - "27017:27017"
+  smtp:
+    image: reachfive/fake-smtp-server
+    ports:
+      - "1080:1080"
+      - "1025:1025"
