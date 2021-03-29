@@ -50,6 +50,8 @@ And once this dependencies are up and running
 
 Note that the exposed port for the Public Service is `8888`.
 
+The fake SMTP exposes a list of received mails on port `1080`.
+
 # Docs
 Public Service and Subscription service have documentacion, in order to create it, run `npm run docs` inside each service. OpenAPI v3 and Async Api have been used to document the services.
 
