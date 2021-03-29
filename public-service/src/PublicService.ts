@@ -4,7 +4,6 @@ import {RpcClient} from './lib/RpcClient';
 import {SimpleRpcClient} from './lib/SimpleRpcClient';
 
 interface PublicServiceConfig {
-	httpAddress: string;
 	httpPort: number;
 	rabbitAddress: string;
 }
@@ -24,13 +23,9 @@ export class PublicService {
 	public async start(): Promise<void> {
 		await this.rpcClient.init();
 		const subscriptionFacade = new SubscriptionFacade(this.rpcClient);
-		this.restIface = await PublicServiceRestApi.start(
-			this.config.httpAddress,
-			this.config.httpPort,
-			{
-				subscriptionUseCases: subscriptionFacade,
-			},
-		);
+		this.restIface = await PublicServiceRestApi.start(this.config.httpPort, {
+			subscriptionUseCases: subscriptionFacade,
+		});
 	}
 
 	public async stop(): Promise<void> {
