@@ -19,7 +19,7 @@ The services has been developed using NodeJS v14.
 In order to properly work, the system needs three external services
 - MongoDB as database
 - RabbitMQ as message broker
-- FakeSMTP as mock smtp server
+- reachfive Fake SMTP as mock smtp server
 
 This software is used in form of Docker images
 
